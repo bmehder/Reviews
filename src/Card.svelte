@@ -1,28 +1,26 @@
 <script>
-  import { fly } from 'svelte/transition'
+  import { testimonials } from './testimonialsData.js'
 
-  export let testimonials
-  export let testimonialNum = 0
-  export let xOffest
+  export let testimonialNumber = 0
+
+  const { text, name, date } = testimonials[testimonialNumber]
 </script>
 
-{#key testimonialNum}
-  <div class="card" in:fly={{ x: xOffest }}>
-    <i class="fa fa-quote-left" />
-    <div class="quote">
-      <p>{testimonials[testimonialNum].text}</p>
-    </div>
-    <div class="meta">
-      <p class="name">{testimonials[testimonialNum].name}</p>
-      <p><small>{testimonials[testimonialNum].date}</small></p>
-      <p>
-        {#each Array(5) as _}
-          <i class="fa fa-star" />
-        {/each}
-      </p>
-    </div>
+<div class="card">
+  <i class="fa fa-quote-left" />
+  <div class="quote">
+    <p>{text}</p>
   </div>
-{/key}
+  <div class="meta">
+    <p class="name">{name}</p>
+    <p><small>{date}</small></p>
+    <p>
+      {#each Array(5) as _}
+        <i class="fa fa-star" />
+      {/each}
+    </p>
+  </div>
+</div>
 
 <style>
   * {

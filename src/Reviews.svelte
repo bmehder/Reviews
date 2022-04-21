@@ -1,29 +1,43 @@
 <script>
-  import Card from './Card.svelte'
+  import { fly } from 'svelte/transition'
   import { testimonials } from './testimonialsData.js'
+  import Card from './Card.svelte'
 
-  let testimonialNum = 0
+  const NUMBER_OF_CARDS = 3
+
+  let testimonialNumber = 0
   let xOffest = 800
+
+  $: isAtLeastThreeTestimonialsRemaining = testimonialNumber < testimonials.length - NUMBER_OF_CARDS
+  $: isGreaterThanFirstTestimonial = testimonialNumber > 0
 
   const goForward = () => {
     xOffest = 800
-    testimonialNum < testimonials.length - 3 ? (testimonialNum += 3) : (testimonialNum = 0)
+    isAtLeastThreeTestimonialsRemaining
+      ? (testimonialNumber += NUMBER_OF_CARDS)
+      : (testimonialNumber = 0)
   }
 
-  const goBack = () => {
+  const goBackward = () => {
     xOffest = -800
-    testimonialNum > 0 ? (testimonialNum -= 3) : (testimonialNum = testimonials.length - 3)
+    isGreaterThanFirstTestimonial
+      ? (testimonialNumber -= NUMBER_OF_CARDS)
+      : (testimonialNumber = testimonials.length - NUMBER_OF_CARDS)
   }
+
+  const handleClick = direction => (direction === 'forward' ? goForward() : goBackward())
 </script>
 
 <div class="outer">
-  <i class="fa fa-angle-left fa-3x" on:click={goBack} />
-  <div class="inner">
-    <Card {testimonials} {testimonialNum} {xOffest} />
-    <Card {testimonials} testimonialNum={testimonialNum + 1} {xOffest} />
-    <Card {testimonials} testimonialNum={testimonialNum + 2} {xOffest} />
-  </div>
-  <i class="fa fa-angle-right fa-3x" on:click={goForward} />
+  <i class="fa fa-angle-left fa-3x" on:click={handleClick} />
+  {#key testimonialNumber}
+    <div class="inner" in:fly={{ x: xOffest }}>
+      {#each Array(NUMBER_OF_CARDS) as _, index}
+        <Card testimonialNumber={testimonialNumber + index} />
+      {/each}
+    </div>
+  {/key}
+  <i class="fa fa-angle-right fa-3x" on:click={() => handleClick('forward')} />
 </div>
 
 <style>
