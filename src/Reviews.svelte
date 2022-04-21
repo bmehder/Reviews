@@ -16,12 +16,12 @@
   }
 </script>
 
-<svelte:head>
+<!-- <svelte:head>
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
   />
-</svelte:head>
+</svelte:head> -->
 
 <section>
   <i class="fa fa-angle-left fa-2x" on:click={goBack} />

@@ -6,12 +6,12 @@
   export let xOffest
 </script>
 
-<svelte:head>
+<!-- <svelte:head>
   <link
     rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
   />
-</svelte:head>
+</svelte:head> -->
 
 {#key testimonialNum}
   <div class="outer" in:fly={{ x: xOffest }}>
@@ -21,7 +21,7 @@
     </div>
     <div class="meta">
       <p class="name">{testimonials[testimonialNum].name}</p>
-      <p><small>Sat, Apr 10, 2021</small></p>
+      <p><small>{testimonials[testimonialNum].date}</small></p>
       <p>
         {#each Array(5) as item}
           <i class="fa fa-star" />
