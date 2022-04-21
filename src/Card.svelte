@@ -6,15 +6,8 @@
   export let xOffest
 </script>
 
-<!-- <svelte:head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-  />
-</svelte:head> -->
-
 {#key testimonialNum}
-  <div class="outer" in:fly={{ x: xOffest }}>
+  <div class="card" in:fly={{ x: xOffest }}>
     <i class="fa fa-quote-left" />
     <div class="quote">
       <p>{testimonials[testimonialNum].text}</p>
@@ -23,7 +16,7 @@
       <p class="name">{testimonials[testimonialNum].name}</p>
       <p><small>{testimonials[testimonialNum].date}</small></p>
       <p>
-        {#each Array(5) as item}
+        {#each Array(5) as _}
           <i class="fa fa-star" />
         {/each}
       </p>
@@ -32,18 +25,22 @@
 {/key}
 
 <style>
-  .outer {
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
     flex-basis: 300px;
     flex-shrink: 0;
-    margin: 2rem 1rem;
     padding: 2rem;
     aspect-ratio: 1;
     background-color: white;
-    box-shadow: 2px 2px 20px -2px rgb(0 0 0 / 0.1);
+    box-shadow: 2px 2px 20px -2px rgb(0 0 0 / 0.2);
     line-height: 1.5;
     font-style: italic;
   }
@@ -57,23 +54,23 @@
   }
   .name {
     margin-top: 1rem;
-    color: var(--primary-accent);
+    color: var(--primary);
     font-size: 120%;
     font-weight: bold;
   }
-  small {
+  .meta small {
     font-size: 80%;
   }
-  p {
-    margin: 0;
-  }
-  i {
+  .fa {
     padding: 2px;
-    color: var(--primary-accent);
+    color: var(--primary);
     font-size: 1.5rem;
   }
+  .fa-star {
+    color: #f4d136;
+  }
   @media screen and (max-width: 600px) {
-    .outer {
+    .card {
       flex-basis: 240px;
     }
   }

@@ -16,33 +16,22 @@
   }
 </script>
 
-<!-- <svelte:head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
-  />
-</svelte:head> -->
-
-<section>
-  <i class="fa fa-angle-left fa-2x" on:click={goBack} />
-  <div>
+<div class="outer">
+  <i class="fa fa-angle-left fa-3x" on:click={goBack} />
+  <div class="inner">
     <Card {testimonials} {testimonialNum} {xOffest} />
-    {#if testimonials[testimonialNum + 1] || testimonials[testimonialNum - testimonials.length - 1]}
-      <Card {testimonials} testimonialNum={testimonialNum + 1} {xOffest} />
-    {/if}
-    {#if testimonials[testimonialNum + 2] || testimonials[testimonialNum - testimonials.length - 2]}
-      <Card {testimonials} testimonialNum={testimonialNum + 2} {xOffest} />
-    {/if}
+    <Card {testimonials} testimonialNum={testimonialNum + 1} {xOffest} />
+    <Card {testimonials} testimonialNum={testimonialNum + 2} {xOffest} />
   </div>
-  <i class="fa fa-angle-right fa-2x" on:click={goForward} />
-</section>
+  <i class="fa fa-angle-right fa-3x" on:click={goForward} />
+</div>
 
 <style>
   :root {
     --primary: #6ac;
     --primary-dark: #269;
     --primary-light: #9de;
-    --primary-light-trans: #9df4;
+    --primary-light-trans: #9de9;
     --primary-contrast: #fff;
     --primary-accent: #75b;
     --primary-neutral: #888;
@@ -50,29 +39,27 @@
     --alt-two: #6a6;
     --primary-font: Nunito Sans;
   }
-  /* :global(body) {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  } */
-  section {
+  .outer {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1rem;
-    background-color: var(--primary-light-trans);
-    overflow: hidden;
   }
-  div {
+  .inner {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    gap: 2rem;
     min-height: 150px;
+    overflow: hidden;
   }
-  i {
+  .fa {
     padding: 2px;
-    color: var(--primary-accent);
-    font-size: 1.5rem;
+    color: var(--primary-dark);
+    cursor: pointer;
+    transition: transform 200ms ease-in-out;
+  }
+  .fa:hover {
+    transform: scale(1.2);
   }
 </style>
