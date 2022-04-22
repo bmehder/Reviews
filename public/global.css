@@ -73,7 +73,7 @@ button:focus {
 }
 
 #reviews {
-	padding: 2rem 1rem 4rem;
+	padding: 4rem;
 	background-color: var(--primary-light-trans);
 	background-image: url(/bg-transparent.png);
 	background-size: 50%;
@@ -82,11 +82,12 @@ button:focus {
 	flex-direction: column;
 	justify-content: space-between;
 	align-items: center;
+	gap: 2rem;
 	overflow: hidden;
 }
 
 h2 {
-	margin-bottom: 3rem;
+	margin: 1rem;
 	font-size: 2.5rem;
 	font-weight: 500;
 	text-transform: uppercase;
@@ -95,7 +96,7 @@ h2 {
 
 .button {
 	display: inline-block;
-	margin-top: 4rem;
+	margin-top: 2rem;
 	padding: 1rem 2rem;
 	background-color: var(--primary-dark);
 	color: var(--primary-contrast);
@@ -109,4 +110,14 @@ h2 {
 	color: var(--primary-dark);
 	border: 3px solid var(--primary-dark);
 	text-decoration: none;
+}
+
+@media screen and (max-width: 720px) {
+	h2 {
+		margin: 0;
+	}
+
+	.button {
+		margin-top: 0;
+	}
 }

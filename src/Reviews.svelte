@@ -1,5 +1,6 @@
 <script>
   import { fly } from 'svelte/transition'
+  import { backIn, bounceIn, circIn, elasticIn, quintIn } from 'svelte/easing'
   import { reviews } from './reviewsData.js'
   import { observeAction, isVisible } from './store.js'
 
@@ -49,7 +50,7 @@
 <div use:observeAction class="outer">
   <i class="fa fa-angle-left fa-3x" on:click={() => handleEvent('prev')} />
   {#key reviewNumber}
-    <div class="inner" in:fly={{ x: xOffset }}>
+    <div class="inner" in:fly={{ x: xOffset, duration: 800 }}>
       {#each Array(SET_OF_REVIEWS) as _, index}
         <Card reviewNumber={reviewNumber + index} />
       {/each}
@@ -63,7 +64,6 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    overflow: hidden;
   }
   .inner {
     display: flex;
@@ -71,7 +71,6 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    overflow: hidden;
   }
   .fa {
     padding: 2px;
