@@ -3,7 +3,7 @@
 
   export let reviewNumber = 0
 
-  const { text, name, date } = reviews[reviewNumber]
+  const { text, name, date, stars } = reviews[reviewNumber]
 </script>
 
 <div class="card">
@@ -15,7 +15,7 @@
     <p class="name">{name}</p>
     <p><small>{date}</small></p>
     <p>
-      {#each Array(5) as _}
+      {#each Array(stars) as _}
         <i class="fa fa-star" />
       {/each}
     </p>

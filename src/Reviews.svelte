@@ -14,22 +14,33 @@
   $: isBeforeEnd = reviewNumber < reviews.length - SET_OF_REVIEWS
   const isNext = direction => direction === 'next'
 
-  const getStartOfFirstSet = () => reviews.length - reviews.length
-  const getStartOfLastSet = () => reviews.length - SET_OF_REVIEWS
-  const getPreviousSet = () => reviewNumber - SET_OF_REVIEWS
-  const getNextSet = () => reviewNumber + SET_OF_REVIEWS
+  const getFirstSetIndex = () => reviews.length - reviews.length
+  const getLastSetIndex = () => reviews.length - SET_OF_REVIEWS
+  const getPrevSetIndex = () => reviewNumber - SET_OF_REVIEWS
+  const getNextSetIndex = () => reviewNumber + SET_OF_REVIEWS
+
   const getXOffset = direction => (isNext(direction) ? DISTANCE : DISTANCE * -1)
 
-  const getNextReviews = () => (isBeforeEnd ? getNextSet() : getStartOfFirstSet())
-  const getPrevReviews = () => (isAtBeginning ? getStartOfLastSet() : getPreviousSet())
+  const getNextReviews = () => (isBeforeEnd ? getNextSetIndex() : getFirstSetIndex())
+  const getPrevReviews = () => (isAtBeginning ? getLastSetIndex() : getPrevSetIndex())
 
   const setXOffset = direction => (xOffset = getXOffset(direction))
-
-  const setReviewNumber = direction =>
-    (reviewNumber = isNext(direction) ? getNextReviews() : getPrevReviews())
+  // prettier-ignore
+  const setReviewNumber = direction => (reviewNumber = isNext(direction) ? getNextReviews() : getPrevReviews())
 
   const handleClick = direction => setXOffset(direction) && setReviewNumber(direction)
+
+  const handleKeydown = event => {
+    if (event.key === 'ArrowRight') {
+      handleClick('next')
+    }
+    if (event.key === 'ArrowLeft') {
+      handleClick('prev')
+    }
+  }
 </script>
+
+<svelte:window on:keydown={e => handleKeydown(e)} />
 
 <div class="outer">
   <i class="fa fa-angle-left fa-3x" on:click={() => handleClick('prev')} />
