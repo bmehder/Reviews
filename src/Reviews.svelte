@@ -10,23 +10,23 @@
   let reviewNumber = 0
   let xOffset = null
 
-  $: isMoreSetsOfReviews = reviewNumber < reviews.length - SET_OF_REVIEWS
   $: isAtBeginning = reviewNumber === 0
+  $: isAtEnd = reviewNumber < reviews.length - SET_OF_REVIEWS
 
-  const startAtTheBeginning = () => 0
-  const startAtTheEnd = () => reviews.length - SET_OF_REVIEWS
-  const goBackOneSet = () => reviewNumber - SET_OF_REVIEWS
-  const goForwardOneSet = () => reviewNumber + SET_OF_REVIEWS
-  const setXOffset = direction => (direction === 'next' ? DISTANCE : DISTANCE * -1)
+  const getStartOfFirstSet = () => 0
+  const getStartOfLastSet = () => reviews.length - SET_OF_REVIEWS
+  const getPreviousSet = () => reviewNumber - SET_OF_REVIEWS
+  const getNextSet = () => reviewNumber + SET_OF_REVIEWS
+  const getXOffset = direction => (direction === 'next' ? DISTANCE : DISTANCE * -1)
 
   const goForward = direction => {
-    xOffset = setXOffset(direction)
-    reviewNumber = isMoreSetsOfReviews ? goForwardOneSet() : startAtTheBeginning()
+    xOffset = getXOffset(direction)
+    reviewNumber = isAtEnd ? getNextSet() : getStartOfFirstSet()
   }
 
   const goBackward = direction => {
-    xOffset = setXOffset(direction)
-    reviewNumber = isAtBeginning ? startAtTheEnd() : goBackOneSet()
+    xOffset = getXOffset(direction)
+    reviewNumber = isAtBeginning ? getStartOfLastSet() : getPreviousSet()
   }
 
   const handleClick = direction =>
