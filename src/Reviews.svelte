@@ -3,41 +3,43 @@
   import { testimonials } from './testimonialsData.js'
   import Card from './Card.svelte'
 
-  const NUMBER_OF_CARDS = 3
+  const SET_OF_CARDS = 3
+  const DISTANCE = 800
 
   let testimonialNumber = 0
-  let xOffest = 800
+  let xOffset = null
 
-  $: isAtLeastThreeTestimonialsRemaining = testimonialNumber < testimonials.length - NUMBER_OF_CARDS
-  $: isGreaterThanFirstTestimonial = testimonialNumber > 0
+  $: isMoreSetsOfCards = testimonialNumber < testimonials.length - SET_OF_CARDS
+  $: isAtBeginning = testimonialNumber === 0
+
+  const startAtTheBeginning = () => (testimonialNumber = 0)
+  const startAtTheEnd = () => (testimonialNumber = testimonials.length - SET_OF_CARDS)
+  const goBackOneSet = () => (testimonialNumber = testimonialNumber - SET_OF_CARDS)
+  const goForwardOneSet = () => (testimonialNumber = testimonialNumber + SET_OF_CARDS)
 
   const goForward = () => {
-    xOffest = 800
-    isAtLeastThreeTestimonialsRemaining
-      ? (testimonialNumber += NUMBER_OF_CARDS)
-      : (testimonialNumber = 0)
+    xOffset = DISTANCE
+    isMoreSetsOfCards ? goForwardOneSet() : startAtTheBeginning()
   }
 
   const goBackward = () => {
-    xOffest = -800
-    isGreaterThanFirstTestimonial
-      ? (testimonialNumber -= NUMBER_OF_CARDS)
-      : (testimonialNumber = testimonials.length - NUMBER_OF_CARDS)
+    xOffset = DISTANCE * -1
+    isAtBeginning ? startAtTheEnd() : goBackOneSet()
   }
 
-  const handleClick = direction => (direction === 'forward' ? goForward() : goBackward())
+  const handleClick = direction => (direction === 'next' ? goForward() : goBackward())
 </script>
 
 <div class="outer">
-  <i class="fa fa-angle-left fa-3x" on:click={handleClick} />
+  <i class="fa fa-angle-left fa-3x" on:click={() => handleClick('prev')} />
   {#key testimonialNumber}
-    <div class="inner" in:fly={{ x: xOffest }}>
-      {#each Array(NUMBER_OF_CARDS) as _, index}
+    <div class="inner" in:fly={{ x: xOffset }}>
+      {#each Array(SET_OF_CARDS) as _, index}
         <Card testimonialNumber={testimonialNumber + index} />
       {/each}
     </div>
   {/key}
-  <i class="fa fa-angle-right fa-3x" on:click={() => handleClick('forward')} />
+  <i class="fa fa-angle-right fa-3x" on:click={() => handleClick('next')} />
 </div>
 
 <style>
