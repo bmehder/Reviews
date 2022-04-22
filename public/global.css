@@ -1,3 +1,16 @@
+:root {
+	--primary: #6ac;
+	--primary-dark: #269;
+	--primary-light: #9de;
+	--primary-light-trans: #9de9;
+	--primary-contrast: #fff;
+	--primary-accent: #75b;
+	--primary-neutral: #888;
+	--alt-one: #37a;
+	--alt-two: #6a6;
+	--primary-font: Nunito Sans;
+}
+
 html, body {
 	position: relative;
 	width: 100%;

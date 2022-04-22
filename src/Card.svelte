@@ -1,9 +1,9 @@
 <script>
-  import { testimonials } from './testimonialsData.js'
+  import { reviews } from './reviewsData.js'
 
-  export let testimonialNumber = 0
+  export let reviewNumber = 0
 
-  const { text, name, date } = testimonials[testimonialNumber]
+  const { text, name, date } = reviews[reviewNumber]
 </script>
 
 <div class="card">

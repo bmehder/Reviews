@@ -1,41 +1,44 @@
 <script>
   import { fly } from 'svelte/transition'
-  import { testimonials } from './testimonialsData.js'
+  import { reviews } from './reviewsData.js'
+
   import Card from './Card.svelte'
 
-  const SET_OF_CARDS = 3
+  const SET_OF_REVIEWS = 3
   const DISTANCE = 800
 
-  let testimonialNumber = 0
+  let reviewNumber = 0
   let xOffset = null
 
-  $: isMoreSetsOfCards = testimonialNumber < testimonials.length - SET_OF_CARDS
-  $: isAtBeginning = testimonialNumber === 0
+  $: isMoreSetsOfReviews = reviewNumber < reviews.length - SET_OF_REVIEWS
+  $: isAtBeginning = reviewNumber === 0
 
-  const startAtTheBeginning = () => (testimonialNumber = 0)
-  const startAtTheEnd = () => (testimonialNumber = testimonials.length - SET_OF_CARDS)
-  const goBackOneSet = () => (testimonialNumber = testimonialNumber - SET_OF_CARDS)
-  const goForwardOneSet = () => (testimonialNumber = testimonialNumber + SET_OF_CARDS)
+  const startAtTheBeginning = () => 0
+  const startAtTheEnd = () => reviews.length - SET_OF_REVIEWS
+  const goBackOneSet = () => reviewNumber - SET_OF_REVIEWS
+  const goForwardOneSet = () => reviewNumber + SET_OF_REVIEWS
+  const setXOffset = direction => (direction === 'next' ? DISTANCE : DISTANCE * -1)
 
-  const goForward = () => {
-    xOffset = DISTANCE
-    isMoreSetsOfCards ? goForwardOneSet() : startAtTheBeginning()
+  const goForward = direction => {
+    xOffset = setXOffset(direction)
+    reviewNumber = isMoreSetsOfReviews ? goForwardOneSet() : startAtTheBeginning()
   }
 
-  const goBackward = () => {
-    xOffset = DISTANCE * -1
-    isAtBeginning ? startAtTheEnd() : goBackOneSet()
+  const goBackward = direction => {
+    xOffset = setXOffset(direction)
+    reviewNumber = isAtBeginning ? startAtTheEnd() : goBackOneSet()
   }
 
-  const handleClick = direction => (direction === 'next' ? goForward() : goBackward())
+  const handleClick = direction =>
+    direction === 'next' ? goForward(direction) : goBackward(direction)
 </script>
 
 <div class="outer">
   <i class="fa fa-angle-left fa-3x" on:click={() => handleClick('prev')} />
-  {#key testimonialNumber}
+  {#key reviewNumber}
     <div class="inner" in:fly={{ x: xOffset }}>
-      {#each Array(SET_OF_CARDS) as _, index}
-        <Card testimonialNumber={testimonialNumber + index} />
+      {#each Array(SET_OF_REVIEWS) as _, index}
+        <Card reviewNumber={reviewNumber + index} />
       {/each}
     </div>
   {/key}
@@ -43,18 +46,6 @@
 </div>
 
 <style>
-  :root {
-    --primary: #6ac;
-    --primary-dark: #269;
-    --primary-light: #9de;
-    --primary-light-trans: #9de9;
-    --primary-contrast: #fff;
-    --primary-accent: #75b;
-    --primary-neutral: #888;
-    --alt-one: #37a;
-    --alt-two: #6a6;
-    --primary-font: Nunito Sans;
-  }
   .outer {
     display: flex;
     justify-content: space-between;

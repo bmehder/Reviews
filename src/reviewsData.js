@@ -1,4 +1,4 @@
-export const testimonials = [
+export const reviews = [
   {
     name: '1 Nikki R.',
     text: 'I can now curl my toes & I have no pain in the back of my heal. Awesome office.',
