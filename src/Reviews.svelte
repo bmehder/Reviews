@@ -33,9 +33,11 @@
 
   const handleKeydown = event => {
     if (!$isVisible) return
+
     if (event.key === 'ArrowRight') {
       handleEvent('next')
     }
+
     if (event.key === 'ArrowLeft') {
       handleEvent('prev')
     }
