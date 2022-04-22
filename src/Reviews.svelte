@@ -6,7 +6,7 @@
   import Card from './Card.svelte'
 
   const SET_OF_REVIEWS = 3
-  const DISTANCE = 800
+  const DISTANCE = 1800
 
   let reviewNumber = 0
   let xOffset = null
@@ -63,6 +63,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    overflow: hidden;
   }
   .inner {
     display: flex;
@@ -80,5 +81,11 @@
   }
   .fa:hover {
     transform: scale(1.2);
+  }
+
+  @media screen and (max-width: 720px) {
+    .fa {
+      display: none;
+    }
   }
 </style>
