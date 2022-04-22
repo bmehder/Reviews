@@ -55,7 +55,6 @@
     align-items: center;
     flex-wrap: wrap;
     gap: 2rem;
-    min-height: 150px;
     overflow: hidden;
   }
   .fa {

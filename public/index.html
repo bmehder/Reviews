@@ -18,12 +18,16 @@
   </head>
 
   <body>
-    <div id="reviews"></div>
+    <div id="reviews">
+      <h2>Reviews</h2>
+      <a href="#" class="button">Read More Reviews</a>
+    </div>
 
     <script>
       const target = document.querySelector('#reviews')
+      const anchor = document.querySelector('#reviews .button')
 
-      Reviews(target)
+      Reviews(target, null, anchor)
     </script>
   </body>
 </html>
