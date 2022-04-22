@@ -11,20 +11,22 @@
   let xOffset = null
 
   $: isAtBeginning = reviewNumber === 0
-  $: isAtEnd = reviewNumber < reviews.length - SET_OF_REVIEWS
+  $: isBeforeEnd = reviewNumber < reviews.length - SET_OF_REVIEWS
+  const isNext = direction => direction === 'next'
 
   const getStartOfFirstSet = () => reviews.length - reviews.length
   const getStartOfLastSet = () => reviews.length - SET_OF_REVIEWS
   const getPreviousSet = () => reviewNumber - SET_OF_REVIEWS
   const getNextSet = () => reviewNumber + SET_OF_REVIEWS
+  const getXOffset = direction => (isNext(direction) ? DISTANCE : DISTANCE * -1)
 
-  const getNextReviews = () => (isAtEnd ? getNextSet() : getStartOfFirstSet())
+  const getNextReviews = () => (isBeforeEnd ? getNextSet() : getStartOfFirstSet())
   const getPrevReviews = () => (isAtBeginning ? getStartOfLastSet() : getPreviousSet())
 
-  const setXOffset = direction => (xOffset = direction === 'next' ? DISTANCE : DISTANCE * -1)
+  const setXOffset = direction => (xOffset = getXOffset(direction))
 
   const setReviewNumber = direction =>
-    (reviewNumber = direction === 'next' ? getNextReviews() : getPrevReviews())
+    (reviewNumber = isNext(direction) ? getNextReviews() : getPrevReviews())
 
   const handleClick = direction => setXOffset(direction) && setReviewNumber(direction)
 </script>
