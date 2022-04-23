@@ -88,6 +88,7 @@
     margin: auto;
   }
   .inner {
+    width: calc(100% - 4rem);
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
     gap: 2rem;
