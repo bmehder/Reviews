@@ -59,7 +59,11 @@
 <svelte:window on:keydown={e => handleKeydown(e)} />
 
 <div use:viewportObserver class="outer">
-  <i aria-label="Next Button" class="fa fa-angle-left fa-3x" on:click={() => handleEvent('prev')} />
+  <i
+    aria-label="Previous Button"
+    class="fa fa-angle-left fa-3x"
+    on:click={() => handleEvent('prev')}
+  />
   {#key reviewNumber}
     <div class="inner" in:fly={{ x: xOffset, duration: 800 }}>
       {#each Array(SET_OF_REVIEWS) as _, index}
@@ -68,7 +72,7 @@
     </div>
   {/key}
   <i
-    aria-label="Previous Button"
+    aria-label="Next Button"
     class="fa fa-angle-right fa-3x"
     on:click={() => handleEvent('next')}
   />
