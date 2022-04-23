@@ -33,11 +33,10 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    flex-basis: 300px;
-    flex-shrink: 0;
+    gap: 1rem;
     padding: 2rem;
-    aspect-ratio: 1;
     background-color: white;
+    text-align: left;
     box-shadow: 2px 2px 20px -2px rgb(0 0 0 / 0.2);
     line-height: 1.5;
     font-style: italic;
@@ -51,7 +50,6 @@
     text-align: center;
   }
   .name {
-    margin-top: 1rem;
     color: var(--primary);
     font-size: 120%;
     font-weight: bold;
@@ -65,11 +63,7 @@
     font-size: 1.5rem;
   }
   .fa-star {
+    margin-top: 0.25rem;
     color: #f4d136;
-  }
-  @media screen and (max-width: 600px) {
-    .card {
-      flex-basis: 240px;
-    }
   }
 </style>

@@ -42,6 +42,10 @@
     if (event.key === 'ArrowLeft') {
       handleEvent('prev')
     }
+
+    if (event.key === 'Enter') {
+      reviewNumber = getFirstSetIndex()
+    }
   }
 </script>
 
@@ -61,19 +65,18 @@
 
 <style>
   .outer {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   .inner {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
     gap: 2rem;
+    padding: 0 2rem;
   }
   .fa {
-    padding: 2px;
     color: var(--primary-dark);
     cursor: pointer;
     transition: transform 200ms ease-in-out;
@@ -83,6 +86,9 @@
   }
 
   @media screen and (max-width: 720px) {
+    .inner {
+      padding: 0;
+    }
     .fa {
       display: none;
     }
