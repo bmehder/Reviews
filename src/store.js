@@ -1,14 +1,23 @@
 import { writable } from 'svelte/store'
 
+const observerOptions = {
+  root: null,
+  threshold: 0.5,
+}
+
+const observerCallback = ([entry]) =>
+  entry.isIntersecting ? isVisible.set(true) : isVisible.set(false)
+
+const observer = new window.IntersectionObserver(observerCallback, observerOptions)
+
 export const isVisible = writable(false)
 
-export const observeAction = node => {
-  const observer = new window.IntersectionObserver(
-    ([entry]) => (entry.isIntersecting ? isVisible.set(true) : isVisible.set(false)),
-    {
-      root: null,
-      threshold: 0.5, // threshold 0.1 means trigger if at least 10% of element in viewport
-    }
-  )
+export const viewportObserver = node => {
   observer.observe(node)
+
+  return {
+    destroy() {
+      observer.unobserve(node)
+    },
+  }
 }

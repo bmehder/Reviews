@@ -1,7 +1,7 @@
 <script>
   import { fly } from 'svelte/transition'
   import { reviews } from './reviewsData.js'
-  import { observeAction, isVisible } from './store.js'
+  import { isVisible, viewportObserver } from './store.js'
 
   import Card from './Card.svelte'
 
@@ -52,15 +52,14 @@
 
     if (event.key === 'Enter') {
       reset()
-      return
     }
   }
 </script>
 
 <svelte:window on:keydown={e => handleKeydown(e)} />
 
-<div use:observeAction class="outer">
-  <i class="fa fa-angle-left fa-3x" on:click={() => handleEvent('prev')} />
+<div use:viewportObserver class="outer">
+  <i aria-label="Next Button" class="fa fa-angle-left fa-3x" on:click={() => handleEvent('prev')} />
   {#key reviewNumber}
     <div class="inner" in:fly={{ x: xOffset, duration: 800 }}>
       {#each Array(SET_OF_REVIEWS) as _, index}
@@ -68,7 +67,11 @@
       {/each}
     </div>
   {/key}
-  <i class="fa fa-angle-right fa-3x" on:click={() => handleEvent('next')} />
+  <i
+    aria-label="Previous Button"
+    class="fa fa-angle-right fa-3x"
+    on:click={() => handleEvent('next')}
+  />
 </div>
 
 <style>
