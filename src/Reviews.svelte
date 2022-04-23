@@ -92,6 +92,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(15em, 1fr));
     gap: 2rem;
+    margin: auto;
     padding: 0 2rem;
   }
   .fa {
