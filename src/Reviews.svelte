@@ -74,6 +74,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin: auto;
   }
   .inner {
     display: grid;
@@ -91,9 +92,6 @@
   }
 
   @media screen and (max-width: 768px) {
-    .inner {
-      padding: 0;
-    }
     .fa {
       display: none;
     }
