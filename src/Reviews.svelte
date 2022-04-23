@@ -1,6 +1,5 @@
 <script>
   import { fly } from 'svelte/transition'
-  import { backIn, bounceIn, circIn, elasticIn, quintIn } from 'svelte/easing'
   import { reviews } from './reviewsData.js'
   import { observeAction, isVisible } from './store.js'
 
@@ -71,6 +70,7 @@
 <style>
   .outer {
     width: 100%;
+    max-width: 1140px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -90,7 +90,7 @@
     transform: scale(1.2);
   }
 
-  @media screen and (max-width: 720px) {
+  @media screen and (max-width: 768px) {
     .inner {
       padding: 0;
     }

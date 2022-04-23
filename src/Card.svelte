@@ -33,7 +33,7 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    gap: 1rem;
+    gap: 2rem;
     padding: 2rem;
     background-color: white;
     text-align: left;

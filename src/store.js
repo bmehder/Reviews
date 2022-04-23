@@ -7,7 +7,7 @@ export const observeAction = node => {
     ([entry]) => (entry.isIntersecting ? isVisible.set(true) : isVisible.set(false)),
     {
       root: null,
-      threshold: 0.5, // set offset 0.1 means trigger if at least 10% of element in viewport
+      threshold: 0.5, // threshold 0.1 means trigger if at least 10% of element in viewport
     }
   )
   observer.observe(node)
