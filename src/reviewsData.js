@@ -53,8 +53,16 @@ export const reviews = [
     date: 'Sat, Jan 7, 2021',
     stars: 5,
   },
-  // 	{
-  // 		name: '10 Another P.',
-  // 		text:	'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit!',
-  // 	},
+  // {
+  //   name: '10 Another P.',
+  //   text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime mollitia, molestiae quas vel sint commodi repudiandae consequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit!',
+  //   date: 'Sun, Jan 1, 2021',
+  //   stars: 4,
+  // },
+  // {
+  //   name: '11 P. Mondey',
+  //   text: 'Lorem ipsum dolor sit sequuntur voluptatum laborum numquam blanditiis harum quisquam eius sed odit!',
+  //   date: 'Sat, Dec 31, 2020',
+  //   stars: 4,
+  // },
 ]

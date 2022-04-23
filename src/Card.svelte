@@ -1,7 +1,7 @@
 <script>
   import { reviews } from './reviewsData.js'
 
-  export let reviewNumber = 0
+  export let reviewNumber = null
 
   const { text, name, date, stars } = reviews[reviewNumber]
 </script>

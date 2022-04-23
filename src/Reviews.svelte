@@ -26,8 +26,9 @@
   const getPrevReviews = () => (isAtBeginning ? getLastSetIndex() : getPrevSetIndex())
 
   const setXOffset = direction => (xOffset = getXOffset(direction))
-  // prettier-ignore
-  const setReviewNumber = direction => (reviewNumber = isNext(direction) ? getNextReviews() : getPrevReviews())
+
+  const setReviewNumber = direction =>
+    (reviewNumber = isNext(direction) ? getNextReviews() : getPrevReviews())
 
   const reset = () => {
     xOffset = null
@@ -41,14 +42,17 @@
 
     if (event.key === 'ArrowRight') {
       handleEvent('next')
+      return
     }
 
     if (event.key === 'ArrowLeft') {
       handleEvent('prev')
+      return
     }
 
     if (event.key === 'Enter') {
       reset()
+      return
     }
   }
 </script>
