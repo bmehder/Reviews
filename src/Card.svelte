@@ -13,7 +13,7 @@
   </div>
   <div class="meta">
     <p class="name">{name}</p>
-    <p><small>{date}</small></p>
+    <p><small class="date">{date}</small></p>
     <p>
       {#each Array(stars) as _}
         <i class="fa fa-star" />
@@ -54,7 +54,7 @@
     font-size: 120%;
     font-weight: bold;
   }
-  .meta small {
+  .date {
     font-size: 80%;
   }
   .fa {

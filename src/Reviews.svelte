@@ -9,8 +9,8 @@
   const SET_OF_REVIEWS = 3
   const DISTANCE = 1800
 
-  let reviewNumber = 0
   let xOffset = null
+  let reviewNumber = 0
 
   $: isAtBeginning = reviewNumber === 0
   $: isBeforeEnd = reviewNumber < reviews.length - SET_OF_REVIEWS
@@ -30,6 +30,11 @@
   // prettier-ignore
   const setReviewNumber = direction => (reviewNumber = isNext(direction) ? getNextReviews() : getPrevReviews())
 
+  const reset = () => {
+    xOffset = null
+    reviewNumber = getFirstSetIndex()
+  }
+
   const handleEvent = direction => setXOffset(direction) && setReviewNumber(direction)
 
   const handleKeydown = event => {
@@ -44,7 +49,7 @@
     }
 
     if (event.key === 'Enter') {
-      reviewNumber = getFirstSetIndex()
+      reset()
     }
   }
 </script>
