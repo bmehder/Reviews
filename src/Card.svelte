@@ -1,21 +1,21 @@
 <script>
-  import { reviews } from './reviewsData.js'
-
+  export let reviews = []
   export let reviewNumber = null
 
-  const { text, name, date, stars } = reviews[reviewNumber]
+  console.log(reviews[reviewNumber])
 </script>
 
 <div class="card">
   <i class="fa fa-quote-left" />
   <div class="quote">
-    <p>{text}</p>
+    <p>{@html reviews[reviewNumber]?.content.rendered}</p>
   </div>
   <div class="meta">
-    <p class="name">{name}</p>
-    <p><small class="date">{date}</small></p>
+    <p class="name">{reviews[reviewNumber]?.title.rendered}</p>
+    <p><small class="date">{reviews[reviewNumber]?.date}</small></p>
     <p>
-      {#each Array(stars) as _}
+      <!-- {#each Array(stars) as _} -->
+      {#each Array(5) as _}
         <i class="fa fa-star" />
       {/each}
     </p>

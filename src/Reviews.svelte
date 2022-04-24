@@ -1,15 +1,24 @@
 <script>
   import { fly } from 'svelte/transition'
-  import { reviews } from './reviewsData.js'
   import { isVisible, viewportObserver } from './store.js'
 
   import Card from './Card.svelte'
 
   const SET_OF_REVIEWS = 3
+  const NUMBER_OF_SETS = 3
   const DISTANCE = 1800
+  const ENDPOINT = `https://sprucehealthgroup.com/wp-json/wp/v2/review?per_page=${
+    SET_OF_REVIEWS * NUMBER_OF_SETS
+  }`
 
+  let reviews = []
   let xOffset = null
   let reviewNumber = 0
+
+  const getReviews = async () => {
+    const res = await fetch(ENDPOINT)
+    return await res.json()
+  }
 
   $: isAtBeginning = reviewNumber === 0
   $: isBeforeEnd = reviewNumber < reviews.length - SET_OF_REVIEWS
@@ -35,29 +44,34 @@
   const handleKeydown = event =>
     (event.key === 'ArrowRight' && handleEvent('next')) ||
     (event.key === 'ArrowLeft' && handleEvent('prev'))
+
+  getReviews().then(data => (reviews = data))
+  $: console.log(reviews)
 </script>
 
 <svelte:window on:keydown={e => $isVisible && handleKeydown(e)} />
 
-<div use:viewportObserver class="outer">
-  <i
-    aria-label="Load Previous Reviews"
-    class="fa fa-angle-left fa-3x"
-    on:click={() => handleEvent('prev')}
-  />
-  {#key reviewNumber}
-    <div class="inner" in:fly={{ x: xOffset, duration: 800 }}>
-      {#each Array(SET_OF_REVIEWS) as _, index}
-        <Card reviewNumber={reviewNumber + index} />
-      {/each}
-    </div>
-  {/key}
-  <i
-    aria-label="Load Next Reviews"
-    class="fa fa-angle-right fa-3x"
-    on:click={() => handleEvent('next')}
-  />
-</div>
+{#if reviews && reviews.length != 0}
+  <div use:viewportObserver class="outer">
+    <i
+      aria-label="Load Previous Reviews"
+      class="fa fa-angle-left fa-3x"
+      on:click={() => handleEvent('prev')}
+    />
+    {#key reviewNumber}
+      <div class="inner" in:fly={{ x: xOffset, duration: 800 }}>
+        {#each Array(SET_OF_REVIEWS) as _, index}
+          <Card {reviews} reviewNumber={reviewNumber + index} />
+        {/each}
+      </div>
+    {/key}
+    <i
+      aria-label="Load Next Reviews"
+      class="fa fa-angle-right fa-3x"
+      on:click={() => handleEvent('next')}
+    />
+  </div>
+{/if}
 
 <style>
   .outer {

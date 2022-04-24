@@ -7,9 +7,8 @@ const observerOptions = {
   threshold: 0.5,
 }
 
-const observerCallback = ([entry]) => {
+const observerCallback = ([entry]) =>
   entry.isIntersecting ? isVisible.set(true) : isVisible.set(false)
-}
 
 const observer = new window.IntersectionObserver(observerCallback, observerOptions)
 
