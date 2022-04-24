@@ -30,33 +30,14 @@
   const setReviewNumber = direction =>
     (reviewNumber = isNext(direction) ? getNextReviews() : getPrevReviews())
 
-  const reset = () => {
-    xOffset = null
-    reviewNumber = getFirstSetIndex()
-  }
-
   const handleEvent = direction => setXOffset(direction) && setReviewNumber(direction)
 
-  const handleKeydown = event => {
-    if (!$isVisible) return
-
-    if (event.key === 'ArrowRight') {
-      handleEvent('next')
-      return
-    }
-
-    if (event.key === 'ArrowLeft') {
-      handleEvent('prev')
-      return
-    }
-
-    if (event.key === 'Enter') {
-      reset()
-    }
-  }
+  const handleKeydown = event =>
+    (event.key === 'ArrowRight' && handleEvent('next')) ||
+    (event.key === 'ArrowLeft' && handleEvent('prev'))
 </script>
 
-<svelte:window on:keydown={e => handleKeydown(e)} />
+<svelte:window on:keydown={e => $isVisible && handleKeydown(e)} />
 
 <div use:viewportObserver class="outer">
   <i
@@ -74,7 +55,7 @@
   <i
     aria-label="Load Next Reviews"
     class="fa fa-angle-right fa-3x"
-    on:click={() => handleEvent('next')}
+    on:click={() => $isVisible && handleEvent('next')}
   />
 </div>
 
