@@ -15,14 +15,11 @@
   let xOffset = null
   let reviewNumber = 0
 
-  const getReviews = async () => {
-    const res = await fetch(ENDPOINT)
-    return await res.json()
-  }
-
   $: isAtBeginning = reviewNumber === 0
   $: isBeforeEnd = reviewNumber < reviews.length - SET_OF_REVIEWS
   const isNext = direction => direction === 'next'
+
+  const getReviews = () => fetch(ENDPOINT).then(response => response.json())
 
   const getFirstSetIndex = () => reviews.length - reviews.length
   const getLastSetIndex = () => reviews.length - SET_OF_REVIEWS

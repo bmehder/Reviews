@@ -4,7 +4,7 @@
   const quote = review.content.rendered
   const name = review.title.rendered
   const date = new Date(review.date).toLocaleDateString('en-US')
-  // const stars = DO THIS
+  const stars = 5 // Get this data from REST API
 
   console.log(review)
 </script>
@@ -18,8 +18,7 @@
     <p class="name">{name}</p>
     <p><small class="date">{date}</small></p>
     <p>
-      <!-- {#each Array(stars) as _} -->
-      {#each Array(5) as _}
+      {#each Array(stars) as _}
         <i class="fa fa-star" />
       {/each}
     </p>
