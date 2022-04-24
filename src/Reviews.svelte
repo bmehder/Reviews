@@ -55,7 +55,7 @@
   <i
     aria-label="Load Next Reviews"
     class="fa fa-angle-right fa-3x"
-    on:click={() => $isVisible && handleEvent('next')}
+    on:click={() => handleEvent('next')}
   />
 </div>
 
