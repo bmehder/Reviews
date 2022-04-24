@@ -60,7 +60,7 @@
 
 <div use:viewportObserver class="outer">
   <i
-    aria-label="Previous Button"
+    aria-label="Load Previous Reviews"
     class="fa fa-angle-left fa-3x"
     on:click={() => handleEvent('prev')}
   />
@@ -72,7 +72,7 @@
     </div>
   {/key}
   <i
-    aria-label="Next Button"
+    aria-label="Load Next Reviews"
     class="fa fa-angle-right fa-3x"
     on:click={() => handleEvent('next')}
   />
