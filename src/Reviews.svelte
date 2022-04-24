@@ -105,6 +105,9 @@
   }
 
   @media screen and (max-width: 768px) {
+    .inner {
+      width: 100%;
+    }
     .fa {
       display: none;
     }
