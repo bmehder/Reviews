@@ -19,8 +19,8 @@
   let reviewIndex = 0
 
   // PREDICATES
-  $: isAtBeginning = reviewIndex === 0
-  $: isBeforeEnd = reviewIndex < reviews.length - SET_OF_REVIEWS
+  const isAtBeginning = () => reviewIndex === 0
+  const isBeforeEnd = () => reviewIndex < reviews.length - SET_OF_REVIEWS
   const isDirectionNext = direction => direction === 'next'
 
   // GET STATE
@@ -31,13 +31,12 @@
   const getXOffset = direction => (isDirectionNext(direction) ? DISTANCE : DISTANCE * -1)
 
   // GET STATE ROUTING FUNCTIONS
-  const getNextReviews = () => (isBeforeEnd ? getNextSetIndex() : getFirstSetIndex())
-  const getPrevReviews = () => (isAtBeginning ? getLastSetIndex() : getPrevSetIndex())
+  const getNextReviews = () => (isBeforeEnd() ? getNextSetIndex() : getFirstSetIndex())
+  const getPrevReviews = () => (isAtBeginning() ? getLastSetIndex() : getPrevSetIndex())
 
   // SET STATE
   const setReviews = data => (reviews = data)
   const setXOffset = direction => (xOffset = getXOffset(direction))
-
   const setReviewIndex = direction =>
     (reviewIndex = isDirectionNext(direction) ? getNextReviews() : getPrevReviews())
 
@@ -50,12 +49,12 @@
 
   // API REQUEST
   const fetchData = () => fetch(ENDPOINT).then(response => response.json())
-  const getReviews = fetchData().then(data => setReviews(data))
+  const getReviews = () => fetchData().then(data => setReviews(data))
 </script>
 
 <svelte:window on:keydown={e => $isVisible && handleKeydown(e)} />
 
-{#await getReviews}
+{#await getReviews()}
   <Loading />
 {:then reviews}
   <div use:viewportObserver class="outer">
