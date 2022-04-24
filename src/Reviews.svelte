@@ -1,73 +1,79 @@
 <script>
   import { fly } from 'svelte/transition'
-  import { isVisible, viewportObserver } from './store.js'
+  import { isVisible, viewportObserver } from './utils.js'
 
+  import Loading from './Loading.svelte'
   import Card from './Card.svelte'
 
+  // CONSTANTS
   const SET_OF_REVIEWS = 3
   const NUMBER_OF_SETS = 3
+  const DURATION = 800
   const DISTANCE = 1800
-  const ENDPOINT = `https://sprucehealthgroup.com/wp-json/wp/v2/review?per_page=${
-    SET_OF_REVIEWS * NUMBER_OF_SETS
-  }`
+  const FETCH_OPTIONS = '?per_page=' + SET_OF_REVIEWS * NUMBER_OF_SETS
+  const ENDPOINT = `https://sprucehealthgroup.com/wp-json/wp/v2/review${FETCH_OPTIONS}`
 
+  // APP STATE
   let reviews = []
   let xOffset = null
-  let reviewNumber = 0
+  let reviewIndex = 0
 
-  $: isAtBeginning = reviewNumber === 0
-  $: isBeforeEnd = reviewNumber < reviews.length - SET_OF_REVIEWS
-  const isNext = direction => direction === 'next'
+  // PREDICATES
+  $: isAtBeginning = reviewIndex === 0
+  $: isBeforeEnd = reviewIndex < reviews.length - SET_OF_REVIEWS
+  const isDirectionNext = direction => direction === 'next'
 
-  const getReviews = () => fetch(ENDPOINT).then(response => response.json())
-
+  // GET STATE
   const getFirstSetIndex = () => reviews.length - reviews.length
   const getLastSetIndex = () => reviews.length - SET_OF_REVIEWS
-  const getPrevSetIndex = () => reviewNumber - SET_OF_REVIEWS
-  const getNextSetIndex = () => reviewNumber + SET_OF_REVIEWS
+  const getPrevSetIndex = () => reviewIndex - SET_OF_REVIEWS
+  const getNextSetIndex = () => reviewIndex + SET_OF_REVIEWS
+  const getXOffset = direction => (isDirectionNext(direction) ? DISTANCE : DISTANCE * -1)
 
-  const getXOffset = direction => (isNext(direction) ? DISTANCE : DISTANCE * -1)
-
+  // GET STATE ROUTING FUNCTIONS
   const getNextReviews = () => (isBeforeEnd ? getNextSetIndex() : getFirstSetIndex())
   const getPrevReviews = () => (isAtBeginning ? getLastSetIndex() : getPrevSetIndex())
 
+  // SET STATE
+  const setReviews = data => (reviews = data)
   const setXOffset = direction => (xOffset = getXOffset(direction))
 
-  const setReviewNumber = direction =>
-    (reviewNumber = isNext(direction) ? getNextReviews() : getPrevReviews())
+  const setReviewIndex = direction =>
+    (reviewIndex = isDirectionNext(direction) ? getNextReviews() : getPrevReviews())
 
-  const handleEvent = direction => setXOffset(direction) && setReviewNumber(direction)
+  // EVENT HANDLERS
+  const handleEvent = direction => setXOffset(direction) && setReviewIndex(direction)
 
   const handleKeydown = event =>
     (event.key === 'ArrowRight' && handleEvent('next')) ||
     (event.key === 'ArrowLeft' && handleEvent('prev'))
 
-  const init = getReviews().then(data => (reviews = data))
-
-  // $: console.log(reviews)
+  // API REQUEST
+  const fetchData = () => fetch(ENDPOINT).then(response => response.json())
+  const getReviews = fetchData().then(data => setReviews(data))
 </script>
 
 <svelte:window on:keydown={e => $isVisible && handleKeydown(e)} />
 
-{#await init}
-  <p>Loading...</p>
+{#await getReviews}
+  <Loading />
 {:then reviews}
   <div use:viewportObserver class="outer">
     <i
-      aria-label="Load Previous Reviews"
       class="fa fa-angle-left fa-3x"
+      aria-label="Load Previous Reviews"
       on:click={() => handleEvent('prev')}
     />
-    {#key reviewNumber}
-      <div class="inner" in:fly={{ x: xOffset, duration: 800 }}>
-        {#each Array(SET_OF_REVIEWS) as _, index}
-          <Card review={reviews[reviewNumber + index]} />
+    {#key reviewIndex}
+      <div class="inner" in:fly={{ x: xOffset, duration: DURATION }}>
+        {#each Array(SET_OF_REVIEWS) as _, loopIndex}
+          <Card review={reviews[reviewIndex + loopIndex]} />
         {/each}
       </div>
     {/key}
     <i
-      aria-label="Load Next Reviews"
       class="fa fa-angle-right fa-3x"
+      aria-label="Load Next Reviews"
       on:click={() => handleEvent('next')}
     />
   </div>
