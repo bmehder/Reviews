@@ -45,13 +45,16 @@
     (event.key === 'ArrowRight' && handleEvent('next')) ||
     (event.key === 'ArrowLeft' && handleEvent('prev'))
 
-  getReviews().then(data => (reviews = data))
-  $: console.log(reviews)
+  const init = getReviews().then(data => (reviews = data))
+
+  // $: console.log(reviews)
 </script>
 
 <svelte:window on:keydown={e => $isVisible && handleKeydown(e)} />
 
-{#if reviews && reviews.length != 0}
+{#await init}
+  <p>Loading...</p>
+{:then reviews}
   <div use:viewportObserver class="outer">
     <i
       aria-label="Load Previous Reviews"
@@ -61,7 +64,7 @@
     {#key reviewNumber}
       <div class="inner" in:fly={{ x: xOffset, duration: 800 }}>
         {#each Array(SET_OF_REVIEWS) as _, index}
-          <Card {reviews} reviewNumber={reviewNumber + index} />
+          <Card review={reviews[reviewNumber + index]} />
         {/each}
       </div>
     {/key}
@@ -71,7 +74,9 @@
       on:click={() => handleEvent('next')}
     />
   </div>
-{/if}
+{:catch error}
+  <p>{error}</p>
+{/await}
 
 <style>
   .outer {

@@ -1,18 +1,22 @@
 <script>
-  export let reviews = []
-  export let reviewNumber = null
+  export let review = {}
 
-  console.log(reviews[reviewNumber])
+  const quote = review.content.rendered
+  const name = review.title.rendered
+  const date = new Date(review.date).toLocaleDateString('en-US')
+  // const stars = DO THIS
+
+  console.log(review)
 </script>
 
 <div class="card">
   <i class="fa fa-quote-left" />
   <div class="quote">
-    <p>{@html reviews[reviewNumber]?.content.rendered}</p>
+    <p>{@html quote}</p>
   </div>
   <div class="meta">
-    <p class="name">{reviews[reviewNumber]?.title.rendered}</p>
-    <p><small class="date">{reviews[reviewNumber]?.date}</small></p>
+    <p class="name">{name}</p>
+    <p><small class="date">{date}</small></p>
     <p>
       <!-- {#each Array(stars) as _} -->
       {#each Array(5) as _}
