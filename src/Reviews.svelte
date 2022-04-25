@@ -84,6 +84,7 @@
   .outer {
     width: 100%;
     max-width: 1140px;
+    min-height: 440px;
     display: flex;
     justify-content: space-between;
     align-items: center;
