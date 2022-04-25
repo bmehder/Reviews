@@ -3,8 +3,9 @@
 
   const quote = review.content.rendered
   const name = review.title.rendered
-  const date = new Date(review.date).toLocaleDateString('en-US')
-  const stars = 5 // Get this data from REST API
+  const dateOptions = { month: 'short', year: 'numeric', day: 'numeric' }
+  const date = new Date(review.date).toLocaleDateString('en-US', dateOptions)
+  const stars = +review._bd_reviews_rating
 
   console.log(review)
 </script>
@@ -34,7 +35,7 @@
   .card {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     align-items: center;
     gap: 1rem;
     padding: 2rem;
