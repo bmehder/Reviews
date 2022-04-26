@@ -48,7 +48,8 @@
   .quote {
     display: flex;
     flex-direction: column;
-    margin: auto;
+    /* margin: auto; */
+    margin-bottom: auto;
   }
   .meta {
     text-align: center;
