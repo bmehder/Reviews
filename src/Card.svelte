@@ -11,7 +11,6 @@
 </script>
 
 <div class="card">
-  <i class="fa fa-quote-left" />
   <div class="quote">
     <p>{@html quote}</p>
   </div>
@@ -35,7 +34,6 @@
   .card {
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     align-items: center;
     gap: 1rem;
     padding: 2rem;
@@ -45,10 +43,17 @@
     line-height: 1.5;
     font-style: italic;
   }
+  .quote::before {
+    content: '\201c';
+    color: var(--primary);
+    font-size: 4rem;
+    line-height: 3rem;
+    text-align: center;
+  }
   .quote {
     display: flex;
     flex-direction: column;
-    /* margin: auto; */
+    align-self: flex-start;
     margin-bottom: auto;
   }
   .meta {

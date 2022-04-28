@@ -11,6 +11,12 @@
 	--primary-font: Nunito Sans;
 }
 
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
 html, body {
 	position: relative;
 	width: 100%;
